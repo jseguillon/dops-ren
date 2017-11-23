@@ -1,2 +1,38 @@
- docker run -d -it --name dops-ren --mount type=bind,source="$(pwd)"/source,target=/usr/share/source jseguillon/openbox:alpine
+keygen d'abord si docker sinon conservation ! 
+(sh-keygen.exe -b 4096) 
 
+
+
+
+git clone https://github.com/jseguillon/dops-ren.git
+cp /c/Users/joels/Downloads/openrc.sh source/
+
+docker run -d -it --name dops-ren --mount type=bind,source="$($HOME)"/.ssh,target=/root/.ssh/ --mount type=bind,source="$(pwd)"/source,target=/usr/share/source jseguillon/openbox:a
+lpine 
+
+docker exec -it dops-ren bash
+
+
+source openrc.sh
+export
+openstack server list
+
+mkdir terraform
+terraform init 
+terraform plan 
+export TF_LOG=TRACE
+export TF_LOG_PATH=./terraform.log
+
+export TF_VAR_os_auth_url=$OS_AUTH_URL
+export TF_VAR_os_password=$OS_PASSWORD
+export TF_VAR_os_region_name=$OS_REGION_NAME
+export TF_VAR_os_tenant_id=$OS_TENANT_ID
+export TF_VAR_os_tenant_name=$OS_TENANT_NAME
+export TF_VAR_os_username=$OS_USERNAME
+
+
+
+
+advanced : 
+
+name = "${format("web-%02d", count.index+1)}"
