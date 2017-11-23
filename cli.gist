@@ -7,8 +7,7 @@ keygen d'abord si docker sinon conservation !
 git clone https://github.com/jseguillon/dops-ren.git
 cp /c/Users/joels/Downloads/openrc.sh source/
 
-docker run -d -it --name dops-ren --mount type=bind,source="$($HOME)"/.ssh,target=/root/.ssh/ --mount type=bind,source="$(pwd)"/source,target=/usr/share/source jseguillon/openbox:a
-lpine 
+docker run -d -it --name dops-ren --mount type=bind,source="$(pwd)"/source,target=/usr/share/source jseguillon/openbox:alpine 
 
 docker exec -it dops-ren bash
 
@@ -30,7 +29,8 @@ export TF_VAR_os_tenant_id=$OS_TENANT_ID
 export TF_VAR_os_tenant_name=$OS_TENANT_NAME
 export TF_VAR_os_username=$OS_USERNAME
 
-
+ash-4.3# mkdir -p /root/.ssh
+bash-4.3# echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZH8CO7ijcMTQcuhox/yU0ddftgyO2FypX/ahcOGmWjemdHlu7bDtSBGcf/AV6p0kf64sJy7ig63uImesMjQsFxWN7DejiiUWwZtIz1kqVDDr48pKKuvcjAQlxjwH2l4H+oeMs1e+QWfVe/QnjpX0/C59zOSqBDyOfURBywb0FqyhpteBsxSKn6xF/qhs5Moq53B2HAc93P76vtylIBMcFfPqIChyePv7QbkjSnD0AYqJLYx7fGGzMqm9WD/iktN03s1RvyCR23rKZz0dwxAsEKdLjJ3MHPJprcjZiG1M0Wp0doxYOmno/U9InIyRD5jgwZjyzDFQeY+XuK/TSeY3omLsxpuPGTgKSvqJmiNPgZ1HeOQM95eR8NH2uUCVaJtyoFRDyvqExouELGrnJjDN0Y5Im7944Uw0MDi51GIUSihA9MUu9YY2agKPvwzh4VsVFXXs5qIWKpNaGb+NSbxQ8puZ0c86JOxjhua2123Hw28LfG+dffEJTbX3WD1B8x/n3dZ/zn0OmZ07rXV5fqQv2zprDFJgwp7YV5mnFgce8fv7yxpyNp7j5kD59FuzzHbNd3f/02ak1u19/YSEv5erNIKzuZ271eVe3TRgZgG71LjijryxlxYOIFtGTURwMCujbRUiN0rHO49dVwmt2ZqbALQ/Or7jiWvj51xXNEy2uSQ== joels@DESKTOP-CINT5P9 > /root/.ssh/id_rsa.pub
 
 
 advanced : 
