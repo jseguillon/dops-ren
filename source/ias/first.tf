@@ -8,7 +8,8 @@ resource "openstack_compute_keypair_v2" "test_keypair" {
 
 # Création d'une machine virtuelle OpenStack
 resource "openstack_compute_instance_v2" "test_terraform_instance" {
-  name = "terraform_instance" # Nom de l'instance
+  name = "ubuntu-${count.index}" # Nom de l'instance
+  count = "2"
   provider = "openstack" # Nom du fournisseur
   image_name = "Ubuntu 16.04" # Nom de l'image
   flavor_name = "s1-2" # Nom du type de machine
