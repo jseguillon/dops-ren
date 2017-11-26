@@ -2,10 +2,10 @@
 resource "openstack_compute_keypair_v2" "test_keypair" {
   provider = "openstack" # Nom du fournisseur déclaré dans provider.tf
   name = "test_keypair" # Nom de la clé SSH à utiliser pour la création
-  public_key = "${file("~/.ssh/id_rsa.pub")}" # Chemin vers votre clé SSH précédemment générée
+  public_key = "${file("~/openstack.pub")}" # Chemin vers votre clé SSH précédemment générée
   region = "GRA3"
 }
- 
+
 # Création d'une machine virtuelle OpenStack
 resource "openstack_compute_instance_v2" "test_terraform_instance" {
   name = "terraform_instance" # Nom de l'instance
@@ -19,5 +19,3 @@ resource "openstack_compute_instance_v2" "test_terraform_instance" {
      name = "Ext-Net" # Ajoute le réseau public à votre instance
    }
 }
-
-
