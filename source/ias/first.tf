@@ -14,9 +14,20 @@ resource "openstack_compute_instance_v2" "test_terraform_instance" {
   image_name = "Ubuntu 16.04" # Nom de l'image
   flavor_name = "s1-2" # Nom du type de machine
   region = "GRA3"
-  # Nom de la ressource openstack_compute_keypair_v2 nommé test_keypair
+  # Nom de la ressource openstack_compute_keypair_v2 no mmé test_keypair
   key_pair = "${openstack_compute_keypair_v2.test_keypair.name}"
    network {
      name = "Ext-Net" # Ajoute le réseau public à votre instance
    }
+}
+
+# Création d'une machine virtuelle OpenStack
+resource "openstack_compute_instance_v2" "test_terraform_centos" {
+  name = "centos-${count.index}" # Nom de l'instance
+  provider = "openstack" # Nom du fournisseur
+  image_name = "Centos 6" # Nom de l'image
+  flavor_name = "s1-2" # Nom du type de machine
+  region = "GRA3"
+  # Nom de la ressource openstack_compute_keypair_v2 nommé test_keypair
+  key_pair = "${openstack_compute_keypair_v2.test_keypair.name}"
 }
