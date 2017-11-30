@@ -6,21 +6,35 @@ resource "openstack_compute_keypair_v2" "test_keypair" {
   region = "GRA3"
 }
 
+
+resource "openstack_blockstorage_volume_v2" "dops-ren-ub" {
+  name = "${var.project}-ub-${count.index}"
+  size = 20
+}
+
+resource "openstack_blockstorage_volume_v2" "dops-ren-centos" {
+  name = "${var.project}-centos"
+  size = 20
+}
+
+resource "openstack_compute_volume_attach_v2" "va_1" {
+  instance_id = "${element(openstack_compute_instance_v2.dops-ren-ub.*.id, count.index)}"
+  volume_id   = "${element(openstack_blockstorage_volume_v2.dops-ren-ub.*.id, count.index)}"
+}
+
+resource "openstack_compute_volume_attach_v2" "va_2" {
+  instance_id = "${element(openstack_compute_instance_v2.dops-ren-centos.*.id, count.index)}"
+  volume_id   = "${element(openstack_blockstorage_volume_v2.dops-ren-centos.*.id, count.index)}"
+}
+
 # Création d'une machine virtuelle OpenStack
 resource "openstack_compute_instance_v2" "dops-ren-ub" {
-  name = "dops-ren-ub-${count.index}" # Nom de l'instance
+  name = "${var.project}-ub-${count.index}" # Nom de l'instance
   count = "2"
   provider = "openstack" # Nom du fournisseur
+  image_name = "Ubuntu 16.04" # Nom de l'image
   flavor_name = "s1-2" # Nom du type de machine
   region = "GRA3"
-  block_device {
-    uuid                  = "d1517a07-bc48-4523-b80c-b22f4e506c9e"
-    source_type           = "image"
-    volume_size           = 40
-    boot_index            = 0
-    destination_type      = "volume"
-    delete_on_termination = true
-  }
   # Nom de la ressource openstack_compute_keypair_v2 no mmé test_keypair
   key_pair = "${openstack_compute_keypair_v2.test_keypair.name}"
    network {
@@ -29,8 +43,8 @@ resource "openstack_compute_instance_v2" "dops-ren-ub" {
 }
 
 # Création d'une machine virtuelle OpenStack
-resource "openstack_compute_instance_v2" "dops-centos" {
-  name = "dops-ren-centos-${count.index}" # Nom de l'instance
+resource "openstack_compute_instance_v2" "dops-ren-centos" {
+  name = "${var.project}-centos-${count.index}" # Nom de l'instance
   provider = "openstack" # Nom du fournisseur
   image_name = "Centos 6" # Nom de l'image
   flavor_name = "s1-2" # Nom du type de machine
