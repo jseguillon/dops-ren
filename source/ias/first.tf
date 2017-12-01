@@ -6,6 +6,12 @@ resource "openstack_compute_keypair_v2" "test_keypair" {
   region = "GRA3"
 }
 
+resource "openstack_objectstorage_container_v1" "container_1" {
+  region = "GRA3"
+  name   = "tf-test-container-1"
+  content_type = "application/json"
+  depends_on = ["openstack_compute_instance_v2.dops-ren-ub"]
+}
 
 resource "openstack_blockstorage_volume_v2" "dops-ren-ub" {
   count = 2
@@ -40,7 +46,7 @@ resource "openstack_compute_instance_v2" "dops-ren-ub" {
   key_pair = "${openstack_compute_keypair_v2.test_keypair.name}"
    network {
      name = "Ext-Net" # Ajoute le réseau public à votre instance
-   }
+  }
 }
 
 # Création d'une machine virtuelle OpenStack
