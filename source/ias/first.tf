@@ -2,12 +2,13 @@
 resource "openstack_compute_keypair_v2" "test_keypair" {
   provider = "openstack" # Nom du fournisseur déclaré dans provider.tf
   name = "test_keypair" # Nom de la clé SSH à utiliser pour la création
-  public_key = "${file("~/openstack.pub")}" # Chemin vers votre clé SSH précédemment générée
+  public_key = "${file("./openstack.pub")}" # Chemin vers votre clé SSH précédemment générée
   region = "GRA3"
 }
 
 
 resource "openstack_blockstorage_volume_v2" "dops-ren-ub" {
+  count = 2
   name = "${var.project}-ub-${count.index}"
   size = 20
 }
